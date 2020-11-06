@@ -1,4 +1,4 @@
-image: map0.pgm
+image: /home/thill/me4140_ros/src/turtlebot3_planner/maps/map0.pgm
 resolution: 0.050000
 origin: [-10.000000, -10.000000, 0.000000]
 negate: 0
