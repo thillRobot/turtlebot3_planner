@@ -52,39 +52,40 @@ iii) export .dae
 
 4) Create a world file from scratch in the turtlebot3 package directory. 
 
-thill@t540p:~/t540p_ros/src/turtlebot3_control/worlds$ gedit bh3.world
+`gedit bh3.world`
 
 copy in the following code (http://gazebosim.org/tutorials?tut=import_mesh&cat=build_robot)
 notice it mentioned the .dae file to load
 
-
+```
 <?xml version="1.0"?>
 <sdf version="1.4">
 <world name="default">
-<include>
-<uri>model://ground_plane</uri>
-</include>
-<include>
-<uri>model://sun</uri>
-</include>
-<model name="my_mesh">
-<pose>0 0 0  0 0 0</pose>
-<static>true</static>
-<link name="body">
-<visual name="visual">
-<geometry>
-<mesh><uri>file://bh3.dae</uri></mesh>
-</geometry>
-</visual>
-</link>
-</model>
+  <include>
+    <uri>model://ground_plane</uri>
+  </include>
+  <include>
+    <uri>model://sun</uri>
+  </include>
+  <model name="my_mesh">
+    <pose>0 0 0  0 0 0</pose>
+    <static>true</static>
+    <link name="body">
+      <visual name="visual">
+        <geometry>
+          <mesh><uri>file://bh3.dae</uri></mesh>
+        </geometry>
+      </visual>
+    </link>
+  </model>
 </world>
 </sdf>
+```
 
 
 5) Test the new world file. You should be in brown hall when gazebo opens. 
 
-thill@t540p:~/t540p_ros/src/turtlebot3_control/worlds$ gazebo bh3.world   
+`gazebo bh3.world`
 
 That all worked just fine, but I do not think that is not exactly the way we are going to do it.
 
@@ -93,7 +94,7 @@ That all worked just fine, but I do not think that is not exactly the way we are
 6) Instead creating a world from scratch, Bring turtlebot3_simulations into the workspace. We are going to create a new world inside of this package. We will use the already created worlds as a template.
 
 
-thill@t540p:~/t540p_ros/src$ git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
+`git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git`
 
 
 Inside of this package I am going to create a new 'world' for turtlebot3 in live inside of Brown Hall
@@ -103,14 +104,16 @@ i) collect the meshes that are going to be in the model, they should be collada 
 
 ii) create a new .world file 
 
-$ gedit /home/thill/t540p_ros/src/turtlebot3_simulations/turtlebot3_gazebo/worlds/turtlebot3_bh3.world
+`gedit /home/thill/t540p_ros/src/turtlebot3_simulations/turtlebot3_gazebo/worlds/turtlebot3_bh3.world`
 
 make the appropriate edit to the model name
 
+```
 <!-- Load world -->
 <include>
 <uri>model://turtlebot3_bh3</uri>
 </include>
+```
 
 iii) create a new model, this requires a new folder for the model
 
@@ -122,8 +125,9 @@ these files will be referenced in the model.sdf file
 
 
 Here is the new model.config file.
-____________________________________________________
 
+____________________________________________________
+```
 <?xml version="1.0"?>
 
 <model>
@@ -141,12 +145,14 @@ ____________________________________________________
 World of TurtleBot3 in Brown Hall
 </description>
 </model>
+```
 _____________________________________________________
 
 
 Here is the new model.sdf file.
 
 _____________________________________________________________________________________
+```
 <sdf version='1.4'>
 
 <model name='bh3_walls'>
@@ -192,24 +198,28 @@ ________________________________________________________________________________
 </link>
 </model>
 </sdf>
-__________________________________________________________________________________
+```__________________________________________________________________________________
 
 
 
 iv) create a new launch file to test this all 
 
-$ gedit /home/thill/t540p_ros/src/turtlebot3_simulations/turtlebot3_gazebo/launch/turtlebot_bh3.launch  
+```
+gedit /home/thill/t540p_ros/src/turtlebot3_simulations/turtlebot3_gazebo/launch/turtlebot_bh3.launch  
+```
 
 you will have to edit the following line with the new world name
-
+```
 <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_bh3.world"/>    
-
+```
 
 7)Now test! Launch this and the teleop drive and you should have a turtlebot3 in Brown hall that you can drive with the keyboard. The walls are there as objects and everything! The next thing is to try navigation but it should work no problem.
 
-$ roslaunch turtlebot3_gazebo turtlebot3_bh3.launch
-
-$ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
-
+```
+roslaunch turtlebot3_gazebo turtlebot3_bh3.launch
+```
+```
+roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+```
 
 
